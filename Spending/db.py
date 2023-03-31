@@ -3,7 +3,7 @@ import sqlite3
 
 db = sqlite3.connect("spending.db")
 
-db.execute("""
+db.execute("""--sql
 CREATE TABLE spending (
     Date date,
     money_spent float,
@@ -12,7 +12,7 @@ CREATE TABLE spending (
 """)
 
 
-db.execute("""
+db.execute("""--sql
 CREATE TABLE money (
     Date date,
     money_got float,     

@@ -3,9 +3,10 @@ import winsound
 class Alarm:
 
     def __init__(self) -> None:
-        pass
+        self.active = False
 
     def playAlarm(self):
         pass
 
-    
+    def StopAlarm(self):
+        pass

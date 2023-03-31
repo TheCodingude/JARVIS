@@ -22,7 +22,7 @@ def createNewWebDevProject(name):
 
    os.makedirs(path)
 
-   with open(f"index.html", "w") as f:
+   with open("index.html", "w") as f:
       f.close()
 
    with open("style.css", "w") as f:
