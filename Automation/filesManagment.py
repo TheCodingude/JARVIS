@@ -38,10 +38,10 @@ def createNewWebDevProject(name):
       f.write('</body>\n')
       f.write('</html>\n')
 
-   with open("style.css", "w") as f:
+   with open(f"{path}\\style.css", "w") as f:
       f.close()
 
-   with open("script.js", "w") as f:
+   with open(f"{path}\\script.js", "w") as f:
       f.close()
 
 def openProject(project_path):
