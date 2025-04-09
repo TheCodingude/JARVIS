@@ -1,2 +1,4 @@
 test.py
 __pycache__
+chatbot_model.pth
+dimensions.pth

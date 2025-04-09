@@ -1,11 +1,11 @@
-from neuralintents import GenericAssistant
 import speech_recognition
 import pyttsx3 as tts
 import sys
 
+from model import ChatbotAssistant
+
 from Automation.filesManagment import createVsCodeNewProject, createNewWebDevProject, openProject
 from Automation.webBrowser import openSite
-from Calorie_Tracking.caloriesTracking import CalorieTracker
 from Sleep.Alarm import Alarm
 from Sleep.Sleeptracking import SleepTracker
 from Security.faceRec import faceRecongizer
@@ -14,7 +14,6 @@ from Security.faceRec import faceRecongizer
 recongizer = speech_recognition.Recognizer()
 speaker = tts.init()
 speaker.setProperty('rate', 175)
-
 
 def create_note():
     global recongizer
@@ -80,6 +79,7 @@ def add_todo():
                 done = True
                 speaker.say(f"add {item} to your to do list")
                 speaker.runAndWait()
+
         except speech_recognition.UnknownValueError:
             recongizer = speech_recognition.Recognizer()
             speaker.say("I did not understand sorry")
@@ -104,12 +104,15 @@ def hello():
 
 def leave():
     speaker.say("Goodbye")
+    speaker.runAndWait()
     sys.exit(0)
 
-mappings = {"greeting": hello, "create_note": create_note, "add_todo":add_todo, "show_todos": show_todos, "exit": leave}
+mappings = {"greeting": hello, "create_note": create_note, "add_todo":add_todo, "show_todos": show_todos, "goodbye": leave}
 
-assistant = GenericAssistant('intents.json', intent_methods=mappings)
-assistant.train_model()
+assistant = ChatbotAssistant('intents.json', function_mappings=mappings)
+assistant.parse_intents()
+assistant.prepare_data()
+assistant.train_model(batch_size=8, lr=0.001, epochs=1000)
 
 while True:
 
@@ -117,11 +120,11 @@ while True:
             with speech_recognition.Microphone() as mic:
 
                 recongizer.adjust_for_ambient_noise(mic, duration=0.2)
-                audio = recongizer.listen()
+                audio = recongizer.listen(mic)
 
                 message: str = recongizer.recognize_google(audio)
                 message = message.lower()
 
-            assistant.request(message)
+            assistant.process_message(message)
         except speech_recognition.UnknownValueError:
             recongizer = speech_recognition.Recognizer()

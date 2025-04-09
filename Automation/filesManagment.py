@@ -49,5 +49,4 @@ def openProject(project_path):
    os.system(f"code {project_path}")
 
 
-createNewWebDevProject("lol")
 
