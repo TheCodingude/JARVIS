@@ -1,5 +1,6 @@
 #----------------------------------------------------------------------------------------------
-#    model courtesy of NeuralNine
+#   model courtesy of NeuralNine with some minor alterations by me 
+#   
 #   https://github.com/NeuralNine/youtube-tutorials/tree/main/AI%20Chatbot%20PyTorch 
 #
 #   His youtube video: https://www.youtube.com/watch?v=a040VmmO-AY&t=3389s
