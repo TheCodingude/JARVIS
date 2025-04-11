@@ -1,3 +1,10 @@
+#----------------------------------------------------------------------------------------------
+#    model courtesy of NeuralNine
+#   https://github.com/NeuralNine/youtube-tutorials/tree/main/AI%20Chatbot%20PyTorch 
+#
+#   His youtube video: https://www.youtube.com/watch?v=a040VmmO-AY&t=3389s
+#----------------------------------------------------------------------------------------------
+
 import os
 import json
 import random
@@ -157,40 +164,40 @@ class ChatbotAssistant:
             return None
 
 
-def get_stocks():
-    stocks = ['APPL', 'META', 'NVDA', 'GS', 'MSFT']
+# def get_stocks():
+#     stocks = ['APPL', 'META', 'NVDA', 'GS', 'MSFT']
 
-    print(random.sample(stocks, 3))
+#     print(random.sample(stocks, 3))
 
-def hi():
-    print("Hello Bitch")
+# def hi():
+#     print("Hello Bitch")
 
-def leave():
-    print("See Ya")
-    exit(0)
+# def leave():
+#     print("See Ya")
+#     exit(0)
 
-def save(assistant: ChatbotAssistant):
-    assistant.save_model('chatbot_model.pth', 'dimensions.json')
+# def save(assistant: ChatbotAssistant):
+#     assistant.save_model('chatbot_model.pth', 'dimensions.json')
 
-if __name__ == '__main__':
-    assistant = 0
-    mappings = {'stocks': get_stocks, 'greeting': hi, 'goodbye': leave, 'save': lambda: save(assistant)}
-    assistant = ChatbotAssistant('intents.json', function_mappings = mappings)
+# if __name__ == '__main__':
+#     assistant = 0
+#     mappings = {'stocks': get_stocks, 'greeting': hi, 'goodbye': leave, 'save': lambda: save(assistant)}
+#     assistant = ChatbotAssistant('intents.json', function_mappings = mappings)
 
-    if os.path.isfile("chatbot_model.pth") == False and os.path.isfile("dimensions.json") == False:
-        assistant.parse_intents()
-        assistant.prepare_data()
-        assistant.train_model(batch_size=8, lr=0.001, epochs=1000)
-    else:
-        assistant.load_model('chatbot_model.pth', 'dimensions.json')
-    # assistant.save_model('chatbot_model.pth', 'dimensions.json')
+#     if os.path.isfile("chatbot_model.pth") == False and os.path.isfile("dimensions.json") == False:
+#         assistant.parse_intents()
+#         assistant.prepare_data()
+#         assistant.train_model(batch_size=8, lr=0.001, epochs=1000)
+#     else:
+#         assistant.load_model('chatbot_model.pth', 'dimensions.json')
+#     # assistant.save_model('chatbot_model.pth', 'dimensions.json')
 
 
-    while True:
-        message = input('Enter your message:')
+#     while True:
+#         message = input('Enter your message:')
 
-        if message == '/quit':
-            break
+#         if message == '/quit':
+#             break
 
-        print(assistant.process_message(message))
+#         print(assistant.process_message(message))
 
