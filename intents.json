@@ -16,14 +16,13 @@
 			"responses": ["Programming, coding or software development, means writing computer code to automate tasks."]
 		},
 		{
-			"tag": "resource",
-			"patterns": ["Where can I learn to code?", "Best way to learn to code", "How can I learn programming", "Good programming resources",
-								   "Can you recommend good coding resources?"],
+			"tag": "add_todo",
+			"patterns": ["new to do", "create a new to do", "add something to my to do list"],
 			"responses": []
 		},
 		{
-			"tag": "stocks",
-			"patterns": ["What are my stocks?", "Which stocks do I own?", "Show my stock portfolio"],
+			"tag": "read_todos",
+			"patterns": ["what are my to do'S?", "list my to do's"],
 			"responses": ["Here are your stocks!"]
 		},
 		{

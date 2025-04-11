@@ -72,6 +72,7 @@ def add_todo():
 
                 item = recongizer.recognize_google(audio)
                 item = item.lower()
+                item = item+'\n'
 
                 f = open("todos", "a")
                 f.write(item)
@@ -91,11 +92,7 @@ def show_todos():
     f = open("todos", "r")
     for item in f.readlines():
         speaker.say(item)
-    speaker.runAndWait()
-
-
-
-
+    # speaker.runAndWait()
 
 def hello():
     speaker.say("hello, what can i do for you?")
@@ -107,24 +104,34 @@ def leave():
     speaker.runAndWait()
     sys.exit(0)
 
-mappings = {"greeting": hello, "create_note": create_note, "add_todo":add_todo, "show_todos": show_todos, "goodbye": leave}
 
-assistant = ChatbotAssistant('intents.json', function_mappings=mappings)
-assistant.parse_intents()
-assistant.prepare_data()
-assistant.train_model(batch_size=8, lr=0.001, epochs=1000)
+def run(assistant: ChatbotAssistant):
+    
+    global recongizer, speaker
+    while True:
 
-while True:
+            try:
+                with speech_recognition.Microphone() as mic:
 
-        try:
-            with speech_recognition.Microphone() as mic:
+                    recongizer.adjust_for_ambient_noise(mic, duration=0.2)
+                    audio = recongizer.listen(mic)
 
-                recongizer.adjust_for_ambient_noise(mic, duration=0.2)
-                audio = recongizer.listen(mic)
+                    message: str = recongizer.recognize_google(audio)
+                    message = message.lower()
 
-                message: str = recongizer.recognize_google(audio)
-                message = message.lower()
+                assistant.process_message(message)
+            except speech_recognition.UnknownValueError:
+                recongizer = speech_recognition.Recognizer()
 
-            assistant.process_message(message)
-        except speech_recognition.UnknownValueError:
-            recongizer = speech_recognition.Recognizer()
+
+
+if __name__ == "__main__":
+
+    mappings = {"greeting": hello, "create_note": create_note, "add_todo":add_todo, "read_todos": show_todos, "goodbye": leave}
+
+    assistant = ChatbotAssistant('intents.json', function_mappings=mappings)
+    assistant.parse_intents()
+    assistant.prepare_data()
+    assistant.train_model(batch_size=8, lr=0.001, epochs=500)
+
+    run(assistant)
